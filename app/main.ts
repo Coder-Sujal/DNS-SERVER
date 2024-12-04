@@ -1,16 +1,30 @@
-const dgram = require("dgram");
+import DNSheader, { TDNSheader,OPCODE,ResponseCode } from './dns/header';
+const dgram = require('dgram');
 
-// You can use print statements as follows for debugging, they'll be visible when running tests.
-console.log("Logs from your program will appear here!");
-
-// Uncomment this block to pass the first stage
+const defautlHeaders:TDNSheader = {
+     id : 1234,
+     qr : 1,
+     opcode : OPCODE.STANDARD_QUERY,
+     aa : 0,
+     tc : 0,
+     rd : 0,
+     ra : 0,
+     z : 0,
+     rcode : ResponseCode.NO_ERROR,
+     qdcount : 0,
+     ancount : 0,
+     nscount : 0,
+     arcount : 0,
+     
+}
 
 const udpSocket = dgram.createSocket("udp4");
 udpSocket.bind(2053, "127.0.0.1");
 
 udpSocket.on("message", (buf, rinfo) => {
   try {
-    const response = Buffer.from("");
+    const header = DNSheader.write(defautlHeaders);
+    const response = header;
     udpSocket.send(response, rinfo.port, rinfo.address);
   } catch (e) {
     console.log(`Error receiving data: ${e}`);

@@ -11,5 +11,11 @@
     ],
     "author": "",
     "license": "MIT",
-    "dependencies": {}
+    "dependencies": {
+        "buffer": "^6.0.3",
+        "dgram": "^1.0.1"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.1"
+    }
 }
